@@ -69,5 +69,56 @@ namespace EnzoAnte.CAI.Ej04
             gpListaPersonas.Enabled = false;
 
         }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            txtDocumento.Text = "";
+            txtApellido.Text = "";
+            txtNombre.Text = "";
+            txtTeléfono.Text = "";
+
+            gpPersonaEnEdición.Enabled = false;
+            gpListaPersonas.Enabled = true;
+        }
+
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+            Persona PersonaAModificar = (Persona)lsvPersonas.SelectedItems[0].Tag;
+
+            Persona PersonaNuevaVersión = new Persona();
+            /* Lo voy a construir a partir de la pantalla*/
+            if (!int.TryParse(txtDocumento.Text, out int documento))
+            {
+                MessageBox.Show("No se ha ingresado un documento válido.");
+                return;
+            }
+
+            PersonaNuevaVersión.Documento = documento;
+            PersonaNuevaVersión.Apellido = txtApellido.Text;
+            PersonaNuevaVersión.Nombre = txtNombre.Text;
+            PersonaNuevaVersión.Teléfono = txtTeléfono.Text;
+
+            var error = modelo.Modificar(PersonaAModificar, PersonaNuevaVersión);//La firma (definición) no va a cambiar. Se trata de crear estructuras, métodos (acciones) que no cambien respecto de los datos (hablando en un nivel de abstracción superior).
+            if (error != null)
+            {
+                MessageBox.Show(error, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var item = new ListViewItem();
+            item.Text = PersonaAModificar.Documento.ToString();
+            item.SubItems.Add(PersonaAModificar.Apellido);
+            item.SubItems.Add(PersonaAModificar.Nombre);
+            item.SubItems.Add(PersonaAModificar.Teléfono);
+
+            txtDocumento.Text = "";
+            txtApellido.Text = "";
+            txtNombre.Text = "";
+            txtTeléfono.Text = "";
+
+            gpPersonaEnEdición.Enabled = false;
+            gpListaPersonas.Enabled = true;
+
+        }
     }
 }
