@@ -24,13 +24,14 @@ namespace EnzoAnte.CAI.Ej04
                 return "No puede borrar a esta persona.";
             }
 
-            Personas.Remove(personaSeleccionada);
+            Personas.Remove(PersonaSeleccionada);
             return null;
         }
 
         internal string Modificar(Persona PersonaAModificar, Persona PersonaNuevaVersión)
         {
-            /*Todas las validaciones imaginables. Algunas modificaciones pueden estar acá y otras van a estar en la Capa de Negocio, la que realmente realiza las operaciones.*/
+            /*Todas las validaciones imaginables. Algunas modificaciones pueden estar acá en el modelo y otras van a estar en la Capa de Negocio (reglas de negocio), la que realmente realiza las operaciones.*/
+            //La pantalla depende solo del Modelo, y no de otros módulos (Facturación, Presupuesto, etc).
             if (PersonaNuevaVersión.Documento < 0 || PersonaNuevaVersión.Documento > 99_999_999)
             {
                 return "El documento debe ser un número entre 1 y 99.999.999";

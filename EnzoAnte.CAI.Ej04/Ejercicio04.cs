@@ -15,8 +15,8 @@ namespace EnzoAnte.CAI.Ej04
             foreach (var persona in modelo.Personas) // Para cada persona en el modelo persona, agregar a la persona a la lista
             {
                 var item = new ListViewItem();
-                item.Text = persona.Documento.ToString();
-                item.SubItems.Add(persona.Apellido);
+                item.Text = persona.Documento.ToString(); // = item.Subitems[0].Text. Implícitamente agrega el subitem [0]
+                item.SubItems.Add(persona.Apellido); //ímplícitamente estoy agregando el subitem [1], no el 0
                 item.SubItems.Add(persona.Nombre);
                 item.SubItems.Add(persona.Teléfono);
                 item.Tag = persona;
@@ -105,11 +105,11 @@ namespace EnzoAnte.CAI.Ej04
                 return;
             }
 
-            var item = new ListViewItem();
+            var item = lsvPersonas.SelectedItems[0];
             item.Text = PersonaAModificar.Documento.ToString();
-            item.SubItems.Add(PersonaAModificar.Apellido);
-            item.SubItems.Add(PersonaAModificar.Nombre);
-            item.SubItems.Add(PersonaAModificar.Teléfono);
+            item.SubItems[1].Text = PersonaAModificar.Apellido;
+            item.SubItems[2].Text = PersonaAModificar.Nombre;
+            item.SubItems[3].Text = PersonaAModificar.Teléfono;
 
             txtDocumento.Text = "";
             txtApellido.Text = "";
